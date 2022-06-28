@@ -42,8 +42,6 @@ for i=1:length(fileLst)
         avgFrameNum=10;
         dat_smooth=movmean(table_curve_org,avgFrameNum,2);
         table_curve_s=table_curve_org./sum(abs(dat_smooth),2);
-        table_MAX_s=table_MAX_org./mean(table_MAX_org,2);
-        table_AUC_s=table_AUC_org./mean(table_AUC_org,2);
     end
     %% combine
     table_curve=[table_curve;table_curve_s];

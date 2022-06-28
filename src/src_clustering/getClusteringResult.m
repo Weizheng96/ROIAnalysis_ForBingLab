@@ -3,7 +3,7 @@ clusteringTags=parameter.clusteringTags;
 ClusteringYlim=parameter.ClusteringYlim;
 
 cd(dataPath);
-load("clustering_info.mat");
+load("clustering_info_"+parameter.normalizationMethod+".mat");
 
 %% find valid ROI
 Nroi=length(TagLst);
@@ -28,7 +28,11 @@ MaskLst_valid=MaskLst(validROI,:);
 backgroundTagLst_valid=backgroundTagLst(validROI,:);
 %% clustering for valid ROI
 Z_linkage= linkage(dat_forClustering_all,'ward','euclidean');
-ClusterNumber=length(find(Z_linkage(:,3)>parameter.clusteringThreshold))+1;
+
+MAX_Threshold=sort(Z_linkage(:,3),'descend');
+parameter.clusteringThreshold=min(parameter.clusteringThreshold,MAX_Threshold(2));
+
+ClusterNumber=length(find(Z_linkage(:,3)>=parameter.clusteringThreshold))+1;
 fig=figure('units','normalized','outerposition',[0 0 0.3 1]);
 subplot(1,2,1);
 [~,Tree,outperm]=dendrogram(Z_linkage,ClusterNumber,'Orientation','left','ColorThreshold',parameter.clusteringThreshold);

@@ -52,6 +52,9 @@ parameter.FrameNumAfter=9;
 parameter.MAXdFoF0_threshold=0.1;
 % the max dF/F0 threshold. Decided whether the ROI is responsive.
 
+parameter.normalizationMethod="perROI_onlyCareShape";
+% avaliable option: "raw", "perROI", "perLarva","perROI_onlyCareShape"
+
 parameter.clusteringTags=[
     "*";
     "*";
@@ -69,7 +72,7 @@ parameter.clusteringTags=[
 parameter.clusteringThreshold=2;
 % The threshold to decide if two ROI belong to the same class in Ward's clustering.
 
-parameter.ClusteringYlim=[-0.2 1];
+parameter.ClusteringYlim=[-0.02 0.1];
 % dF/F0 (y axis) range in clusteringResult.png. 
 %% add path
 srcName = mfilename;
@@ -83,6 +86,7 @@ getdFoF0(dataPath,parameter)
 getNormalization(dataPath,"raw");
 getNormalization(dataPath,"perROI");
 getNormalization(dataPath,"perLarva");
+getNormalization(dataPath,"perROI_onlyCareShape");
 
 %% clustering
 getClusteringResult(dataPath,parameter);
